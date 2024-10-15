@@ -1,0 +1,36 @@
+.chart-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 320px;
+  margin-top: 10px;
+}
+
+.en-chart {
+  cursor: default; 
+}
+
+.en-chart:hover {
+  cursor: pointer;
+}
+
+.chart {
+  flex: 1;
+  max-width: 45rem;
+}
+
+.gender-chart {
+  flex: 1;
+  max-width: 45rem;
+  margin-top: 10rem;
+}
+.sidebar-open {
+  margin-left: 320px; 
+  transition: margin-left 0.7s ease;
+}
+
+.sidebar-closed {
+  margin-left: 2rem; 
+  transition: margin-left 0.7s ease;
+}

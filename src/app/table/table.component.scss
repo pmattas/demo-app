@@ -1,0 +1,76 @@
+@import "ag-grid-community/styles/ag-theme-alpine.css";
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #1e1f2a;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  max-width: 1100px;
+  height: 80%;
+  margin-left: 320px;
+  margin-top: 5rem;
+}
+
+.dialog-container {
+  margin-bottom: 20px; 
+  width: 100%;
+  display: flex;
+  justify-content: left;
+}
+
+.table-container {
+  flex: 1; 
+  width: 100%;
+  min-height: 400px; 
+  height: auto;
+}
+
+ag-grid-angular {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+en-search-form {
+  background: var(--en-theme-color-background-surface-elevation-1);
+  margin-left: 35rem;
+}
+
+.refresh {
+  margin-left: 1rem;
+}
+
+#pageSize {
+  margin-left: 4rem;
+  background-color: #8981E5;
+  height: 30px;
+  color: black;
+  border: none;
+}
+.reset{
+  margin-left:1rem;
+}
+.delete{
+  margin-left: 1rem;
+}
+demo-app-edit{
+  margin-left: 1rem;
+}
+.sidebar-open {
+  margin-left: 320px; 
+  transition: margin-left 0.7s ease;
+}
+
+.sidebar-closed {
+  margin-left: 0; 
+  transition: margin-left 0.7s ease;
+}

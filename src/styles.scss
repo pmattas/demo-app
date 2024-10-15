@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import url('en-web-components/dist/en/en.css');
+@import url('en-web-components/dist/en/iconfonts/iconfont.css');
+@import "ec1-prime-ng/assets/style.css";
+@import "ag-grid-community/styles/ag-grid.css";
+
+/* Core Grid CSS */
+
+/* Quartz Theme Specific CSS */
+@import "ag-grid-community/styles/ag-theme-alpine.css";

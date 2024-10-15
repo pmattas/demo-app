@@ -1,0 +1,13 @@
+<en-dialog
+  data-testid="dialog"
+  heading="Add Student"
+  width="80vw"
+  height="80vh"
+  style="overflow: hidden"
+  [isActive]="isActive"
+>
+  <en-button slot="trigger" (click)="toggleActive()"><en-icon-add></en-icon-add></en-button>
+  <div class="dialog-content">
+    <demo-app-forms (formSubmit)="onFormSubmit($event)"></demo-app-forms>
+  </div>
+</en-dialog>

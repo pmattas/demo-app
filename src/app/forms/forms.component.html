@@ -1,0 +1,174 @@
+<div
+  class="formcontainer"
+  style="
+    background-color: var(--en-theme-color-background-surface-elevation-1);
+    width: 400px;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  "
+>
+  <form [formGroup]="additionForm" (ngSubmit)="onSubmit()" novalidate>
+    <en-text-field
+      variant="secondary"
+      label="Name"
+      formControlName="name"
+      type="text"
+      placeholder="Name"
+      isRequired="true"
+      ngDefaultControl
+    ></en-text-field>
+    <div
+      *ngIf="
+        additionForm.get('name')?.invalid && additionForm.get('name')?.touched
+      "
+    >
+      <small style="color: rgb(251, 134, 134)"
+        >Name is required and should contain only letters.</small
+      >
+    </div>
+
+    <select formControlName="gender">
+      <option value="" disabled selected>Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Others">Others</option>
+      <option value="Prefer not to say">Prefer not to say</option>
+    </select>
+    <div
+      *ngIf="
+        additionForm.get('gender')?.invalid &&
+        additionForm.get('gender')?.touched
+      "
+    >
+      <small style="color: rgb(251, 134, 134)">Gender is required.</small>
+    </div>
+
+    <en-text-field
+      variant="secondary"
+      label="Age"
+      name="age"
+      formControlName="age"
+      type="number"
+      placeholder="Age"
+      min="16"
+      max="25"
+      isRequired="true"
+      ngDefaultControl
+    ></en-text-field>
+    <div
+      *ngIf="
+        additionForm.get('age')?.invalid && additionForm.get('age')?.touched
+      "
+    >
+      <small style="color: rgb(251, 134, 134)"
+        >Age must be between 16 and 25.</small
+      >
+    </div>
+
+    <en-text-field
+      variant="secondary"
+      label="Address"
+      name="address"
+      formControlName="address"
+      type="text"
+      placeholder="Address"
+      isRequired="true"
+      ngDefaultControl
+    ></en-text-field>
+    <div
+      *ngIf="
+        additionForm.get('address')?.invalid &&
+        additionForm.get('address')?.touched
+      "
+    >
+      <small style="color: rgb(251, 134, 134)">Address is required.</small>
+    </div>
+
+    <en-text-field
+      variant="secondary"
+      label="Email"
+      name="email"
+      formControlName="email"
+      type="email"
+      placeholder="Email"
+      isRequired="true"
+      ngDefaultControl
+    ></en-text-field>
+    <div
+      *ngIf="
+        additionForm.get('email')?.invalid && additionForm.get('email')?.touched
+      "
+    >
+      <small style="color: rgb(251, 134, 134)">Enter a valid email.</small>
+    </div>
+
+    <en-text-field
+      variant="secondary"
+      label="Phone"
+      name="phone"
+      formControlName="phone"
+      type="tel"
+      placeholder="Phone"
+      isRequired="true"
+      ngDefaultControl
+    ></en-text-field>
+    <div
+      *ngIf="
+        additionForm.get('phone')?.invalid && additionForm.get('phone')?.touched
+      "
+    >
+      <small style="color: rgb(251, 134, 134)"
+        >Phone number must be 10 digits.</small
+      >
+    </div>
+
+    <en-text-field
+      variant="secondary"
+      label="Courses"
+      name="courses"
+      formControlName="courses"
+      type="text"
+      placeholder="Courses"
+      isRequired="true"
+      ngDefaultControl
+    ></en-text-field>
+    <div
+      *ngIf="
+        additionForm.get('courses')?.invalid &&
+        additionForm.get('courses')?.touched
+      "
+    >
+      <small style="color: rgb(251, 134, 134)">Courses are required.</small>
+    </div>
+
+    <en-text-field
+      variant="secondary"
+      label="GPA"
+      name="gpa"
+      formControlName="gpa"
+      type="number"
+      placeholder="GPA"
+      step="0.01"
+      isRequired="true"
+      ngDefaultControl
+    ></en-text-field>
+    <div
+      *ngIf="
+        additionForm.get('gpa')?.invalid && additionForm.get('gpa')?.touched
+      "
+    >
+      <small style="color: rgb(251, 134, 134)"
+        >GPA must be between 0 and 4.</small
+      >
+    </div>
+
+    <div class="form-actions">
+      <en-button type="submit">Submit</en-button>
+      <en-button data-testid="reset" type="reset" variant="secondary"
+        >Reset</en-button
+      >
+    </div>
+  </form>
+</div>

@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.dialog-content {
+  max-height: calc(80vh - 80px); 
+  overflow-y: auto;
+  overflow-x: hidden; 
+}
+.formcontainer {
+  background-color: var(--en-theme-color-background-surface-elevation-1);
+  width: 100%;
+  padding: 24px;
+  box-sizing: border-box; 
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}

@@ -1,0 +1,14 @@
+<nav class="navigation">
+    <en-navigation-menu data-testid="navigation-menu" isActive="showSideBar" (click)="onClick()">
+      <en-menu-item routerLink="dashboard" >
+        <en-icon-chart></en-icon-chart> Dashboard
+      </en-menu-item>
+      <en-menu-item routerLink="students-table">
+        <en-icon-table></en-icon-table> Student Table
+      </en-menu-item>
+      <en-menu-item class="Logout" (click)="navigateToLogin()">
+        <en-icon-sign-out></en-icon-sign-out> Logout
+      </en-menu-item>
+      <div class="dummy-div"></div>
+    </en-navigation-menu>
+  </nav>

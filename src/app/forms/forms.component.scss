@@ -1,0 +1,53 @@
+.formcontainer {
+  background-color: var(--en-theme-color-background-surface-elevation-1);
+  width: 100%;
+  max-width: 400px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  font-size: 0.875rem;
+  margin-bottom: 2px;
+}
+
+en-text-field {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+small {
+  margin-top: 2px;
+  color: rgb(251, 134, 134);
+  font-size: 12px;
+}
+select{
+  background: #2D2F3E;
+  padding: 14px;
+  border: #babcce;
+  color: #babcce;
+  border-style: solid;
+  border-width: 0.75px;
+  border-radius: 7%;
+}
+
+
+input[type="tel"] {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
