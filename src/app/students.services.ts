@@ -1,18 +1,19 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { data } from './student'; 
 
 @Injectable({
   providedIn: 'root',
 })
 export class Students {
-  private apiUrl = 'https://freetestapi.com/api/v1/students';
+  // private apiUrl = 'https://freetestapi.com/api/v1/students';
+
   private studentsData = new BehaviorSubject<any[]>([]);
   currentStudents = this.studentsData.asObservable();
   private showSideBar = new BehaviorSubject<boolean>(true); 
   showSideBarState = this.showSideBar.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.loadInitialData();
   }
 
@@ -34,15 +35,8 @@ export class Students {
   }
 
   fetchData(): void {
-    this.http.get<any[]>(this.apiUrl).subscribe(
-      (response) => {
-        this.studentsData.next(response);
-        localStorage.setItem('studentsData', JSON.stringify(response));
-      },
-      (error) => {
-        console.error('Error fetching data', error);
-      }
-    );
+    this.studentsData.next(data);
+    localStorage.setItem('studentsData', JSON.stringify(data));
   }
 
   addStudent(student: any): void {

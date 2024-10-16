@@ -6,7 +6,9 @@
   style="overflow: hidden"
   [isActive]="isActive"
 >
-  <en-button slot="trigger" (click)="toggleActive()"><en-icon-add></en-icon-add></en-button>
+  <en-button slot="trigger" (click)="toggleActive()" title="Add Student"
+    ><en-icon-add></en-icon-add
+  ></en-button>
   <div class="dialog-content">
     <demo-app-forms (formSubmit)="onFormSubmit($event)"></demo-app-forms>
   </div>

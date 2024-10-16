@@ -92,6 +92,7 @@ export class TableComponent implements OnInit {
   }
 
   refreshData(): void {
+    this.renderer.setProperty(this.nameElement, 'innerHTML', '');
     this.studentsService.fetchData();
   }
   

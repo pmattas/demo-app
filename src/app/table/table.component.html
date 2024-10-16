@@ -5,13 +5,17 @@
 >
   <div class="dialog-container">
     <demo-app-dialog></demo-app-dialog>
-    <en-button class="refresh" (click)="refreshData()">
+    <en-button class="refresh" (click)="refreshData()" title="Refresh Data">
       <en-icon-refresh></en-icon-refresh>
     </en-button>
-    <en-button class="reset" (click)="resetData()">
+    <en-button class="reset" (click)="resetData()" title="Reset Data">
       <en-icon-reset></en-icon-reset>
     </en-button>
-    <en-button class="delete" (click)="deleteStudent(selectedRowData?.id)">
+    <en-button
+      class="delete"
+      (click)="deleteStudent(selectedRowData?.id)"
+      title="Delete Student"
+    >
       <en-icon-delete></en-icon-delete>
     </en-button>
     <demo-app-edit
