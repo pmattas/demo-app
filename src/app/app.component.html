@@ -1,11 +1,17 @@
 <div class="header">
-  <en-product-logo data-testid="product-logo" product="ec" width="50" height="50"></en-product-logo> 
+  <en-product-logo
+    data-testid="product-logo"
+    product="ec"
+    width="50"
+    height="50"
+  ></en-product-logo>
 </div>
 
-<demo-app-navigation/>
+<demo-app-navigation *ngIf="isLoggedIn" />
 <router-outlet></router-outlet>
 
-<!-- <div
+<div
+  *ngIf="!isLoggedIn"
   class="container"
   style="
     background-color: var(--en-theme-color-background-surface-elevation-1);
@@ -15,4 +21,4 @@
 >
   <en-heading tagname="h3">You are not logged in</en-heading>
   <en-link (click)="navigateToLogin()">Login</en-link>
-</div> -->
+</div>

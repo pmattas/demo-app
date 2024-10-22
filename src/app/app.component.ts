@@ -1,8 +1,4 @@
-import {
-  AfterContentChecked,
-  OnInit,
-  Component,
-} from '@angular/core';
+import { AfterContentChecked, OnInit, Component } from '@angular/core';
 import '@en-button';
 import '@en-data-grid';
 import '@en-navigation-menu';
@@ -66,12 +62,12 @@ import '@en-control-button-group';
 import '@en-tooltip';
 import '@en-mini-map';
 import '@en-mini-map-layer';
-import "@en-icons/edit";
-import "@en-icons/delete";
-import "@en-icons/refresh";
-import "@en-icons/table";
-import "@en-product-logo";
-import "@en-icons/reset";
+import '@en-icons/edit';
+import '@en-icons/delete';
+import '@en-icons/refresh';
+import '@en-icons/table';
+import '@en-product-logo';
+import '@en-icons/reset';
 import { Students } from './students.services';
 
 @Component({
@@ -81,20 +77,20 @@ import { Students } from './students.services';
 })
 export class AppComponent implements AfterContentChecked {
   ngAfterContentChecked(): void {}
-  isLoggedIn =false;
+  isLoggedIn = false;
   ngOnInit(): void {
-    // if (localStorage.getItem('isLoggedIn') === 'true') {
-    //   this.isLoggedIn = true;
-    // }
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      this.isLoggedIn = true;
+    }
   }
-  // // navigateToLogin(): void {
-  // //   window.dispatchEvent(
-  // //     new CustomEvent('navigate-to', {
-  // //       detail: {
-  // //         path: '/login',
-  // //       },
-  // //     })
-  // //   );
-  // }
+  navigateToLogin(): void {
+    window.dispatchEvent(
+      new CustomEvent('navigate-to', {
+        detail: {
+          path: '/login',
+        },
+      })
+    );
+  }
   title = 'demo-app';
 }
