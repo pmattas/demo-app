@@ -1,8 +1,19 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, OnInit, ElementRef, Renderer2, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  Input,
+  OnInit,
+  ElementRef,
+  Renderer2,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { Students } from '../students.services';
 import { DialogComponent } from '../dialog/dialog.component';
-import { PaginationNumberFormatterParams, RowSelectedEvent } from 'ag-grid-community';
+import {
+  PaginationNumberFormatterParams,
+  RowSelectedEvent,
+} from 'ag-grid-community';
 import { CommonModule } from '@angular/common';
 import { EditComponent } from '../edit/edit.component';
 
@@ -21,11 +32,13 @@ export class TableComponent implements OnInit {
   paginationSizeSelector = [10, 20, 40];
   rowData: any[] = [];
   filteredRowData: any[] = [];
-  selectedRowData: any = null;
-   @Input() showSideBar: boolean = true;
-   nameElement: any;
+  selectedRowData: any;
+  @Input() showSideBar: boolean = true;
+  nameElement: any;
 
-  public paginationNumberFormatter: (params: PaginationNumberFormatterParams) => string = (params: PaginationNumberFormatterParams) => {
+  public paginationNumberFormatter: (
+    params: PaginationNumberFormatterParams
+  ) => string = (params: PaginationNumberFormatterParams) => {
     return params.value.toLocaleString();
   };
 
@@ -33,34 +46,6 @@ export class TableComponent implements OnInit {
     this.rowData = value;
     if (this.gridApi) {
       this.gridApi.setRowData(this.rowData);
-    }
-  }
-
-  @Input() set clickedData(value: any[]) {
-    const hyphen = new RegExp('-');
-
-    if (this.nameElement) {
-      this.renderer.setProperty(this.nameElement, 'innerHTML', '');
-    }
-
-    if (value.length > 0) {
-      const { name } = value[0];
-      if (this.nameElement) {
-        this.renderer.setProperty(this.nameElement, 'innerHTML', `Data of students:  ${name}`);
-      }
-
-      if (['Male', 'Female', 'Others', 'Prefer not to say'].includes(name)) {
-        this.filteredRowData = this.rowData.filter(student => student.gender === name);
-      } else if (hyphen.test(name)) {
-        const range = this.parseRange(name);
-        this.filteredRowData = this.rowData.filter(student => student.gpa >= range[0] && student.gpa < range[1]);
-      }
-    } else {
-      this.filteredRowData = this.rowData;
-    }
-
-    if (this.gridApi) {
-      this.gridApi.setRowData(this.filteredRowData);
     }
   }
 
@@ -75,27 +60,33 @@ export class TableComponent implements OnInit {
     { field: 'phone', headerName: 'Phone', flex: 2 },
   ];
 
-  constructor(private studentsService: Students, private renderer: Renderer2, private el: ElementRef, private cdr: ChangeDetectorRef) {}
-   
+  constructor(
+    private studentsService: Students,
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private cdr: ChangeDetectorRef
+  ) {}
+
   ngOnInit(): void {
     this.studentsService.showSideBarState.subscribe((value) => {
       this.showSideBar = value;
     });
-    this.studentsService.currentStudents.subscribe(data => {
+    this.studentsService.currentStudents.subscribe((data) => {
       this.rowData = data;
       this.filteredRowData = data;
       if (this.gridApi) {
         this.gridApi.setRowData(this.filteredRowData);
       }
     });
-    this.nameElement = this.el.nativeElement.querySelector('.clicked-data-name');
+    this.nameElement =
+      this.el.nativeElement.querySelector('.clicked-data-name');
   }
 
   refreshData(): void {
     this.renderer.setProperty(this.nameElement, 'innerHTML', '');
     this.studentsService.fetchData();
   }
-  
+
   resetData(): void {
     this.renderer.setProperty(this.nameElement, 'innerHTML', '');
     this.renderer.setProperty(this.nameElement, 'innerHTML', ` `);
@@ -103,31 +94,39 @@ export class TableComponent implements OnInit {
     this.rowData = storedData;
     this.filteredRowData = storedData;
     if (this.gridApi) {
-      this.gridApi.setRowData(this.filteredRowData); 
+      this.gridApi.setRowData(this.filteredRowData);
     }
   }
-    
   onRowSelected(event: RowSelectedEvent): void {
-    if (event.node.isSelected()) {
+    const isSelected = event.node.isSelected();
+
+    if (isSelected) {
       this.selectedRowData = { ...event.data };
-      this.cdr.detectChanges();
+      console.log('Row selected:', this.selectedRowData);
     } else {
-      this.selectedRowData = null;
-      this.cdr.detectChanges();
+      if (this.selectedRowData && this.selectedRowData.id === event.data.id) {
+        this.selectedRowData = null;
+        console.log('Row deselected:', event.data);
+      }
     }
+    this.cdr.detectChanges();
   }
 
   deleteStudent(id: any): void {
     if (id === null || id === undefined) return;
-    const currentStudents = JSON.parse(localStorage.getItem('studentsData') || '[]');
-    const updatedStudents = currentStudents.filter((student: any) => student.id !== id);
+    const currentStudents = JSON.parse(
+      localStorage.getItem('studentsData') || '[]'
+    );
+    const updatedStudents = currentStudents.filter(
+      (student: any) => student.id !== id
+    );
     localStorage.setItem('studentsData', JSON.stringify(updatedStudents));
     this.rowData = updatedStudents;
     this.filteredRowData = updatedStudents;
     if (this.gridApi) {
       this.gridApi.setRowData(this.filteredRowData);
     }
-    this.selectedRowData = null;
+    this.cdr.detectChanges();
   }
 
   applyFilter(event: Event): void {
@@ -149,12 +148,6 @@ export class TableComponent implements OnInit {
     }
   }
 
-  parseRange(rangeString: string): [number, number] {
-    const [minString, maxString] = rangeString.split('-');
-    const min = parseFloat(minString);
-    const max = parseFloat(maxString);
-    return [min, max];
-  }
   reloadTableData(): void {
     const storedData = JSON.parse(localStorage.getItem('studentsData') || '[]');
     this.rowData = storedData;

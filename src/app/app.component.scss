@@ -3,16 +3,25 @@
   top: 0;
   left: 0;
   right: 0px;
-  background-color: #2d2f3e; 
-  z-index: 1000; 
-  padding-bottom: 20px;
+  background-color: #2d2f3e;
+  z-index: 1000;
+  padding-bottom: 14px;
 }
-.container{
+.container {
   margin-top: 15rem;
   margin-left: 35rem;
   padding: 20px;
   background-color: #f9f9f9;
   text-align: center;
   border-radius: 10px;
+}
+.user-info {
+  float: right;
+  margin-top: -2%;
+  margin-right: 3%;
+}
+.product {
+  margin-left: 1.5rem;
+  margin-top: 0.25rem;
 }
 // ::ng-deep

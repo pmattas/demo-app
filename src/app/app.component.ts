@@ -50,6 +50,7 @@ import '@en-icons/settings';
 import '@en-icons/message';
 import '@en-icons/help';
 import '@en-icons/tree';
+import '@en-icons/user';
 import '@en-dialog';
 import '@en-text-passage';
 import '@en-badge';
@@ -76,11 +77,19 @@ import { Students } from './students.services';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements AfterContentChecked {
+  user: any;
   ngAfterContentChecked(): void {}
   isLoggedIn = false;
   ngOnInit(): void {
     if (localStorage.getItem('isLoggedIn') === 'true') {
       this.isLoggedIn = true;
+      const userEmail = localStorage.getItem('currentUser');
+      const storedUsers = JSON.parse(
+        localStorage.getItem('signupData') || '[]'
+      );
+      if (storedUsers.length && userEmail) {
+        this.user = storedUsers.find((u: any) => u.email === userEmail);
+      }
     }
   }
   navigateToLogin(): void {

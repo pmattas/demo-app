@@ -14,6 +14,7 @@
     <en-button
       class="delete"
       (click)="deleteStudent(selectedRowData?.id)"
+      [isDisabled]="!selectedRowData"
       title="Delete Student"
     >
       <en-icon-delete></en-icon-delete>
@@ -21,6 +22,7 @@
     <demo-app-edit
       [studentData]="selectedRowData"
       (formSubmit)="reloadTableData()"
+      [selectedRowData]="selectedRowData"
     ></demo-app-edit>
     <en-search-form
       variant="primary"
@@ -29,8 +31,13 @@
       (keyup)="applyFilter($event)"
     ></en-search-form>
   </div>
-
-  <div class="clicked-data-name"></div>
+  <div>
+    <en-chip
+      class="clicked-data-name"
+      variant="secondary"
+      [isDismissible]="true"
+    ></en-chip>
+  </div>
 
   <div class="table-container">
     <ag-grid-angular

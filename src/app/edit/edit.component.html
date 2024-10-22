@@ -1,18 +1,24 @@
 <en-dialog
   data-testid="dialog"
-  heading="Add Student"
+  heading="Edit Student"
   width="80vw"
   height="80vh"
-  style="z-index: 9999; display: block;"
+  style="z-index: 9999; display: block"
   [isActive]="isActive"
 >
-  <en-button slot="trigger" (click)="toggleActive()" title="Edit Student">
+  <en-button
+    slot="trigger"
+    (click)="toggleActive()"
+    title="Edit Student"
+    [isDisabled]="!selectedRowData"
+  >
     <en-icon-edit size="sm"></en-icon-edit>
   </en-button>
   <div class="dialog-content">
-    <demo-app-forms 
-      [initialData]="studentData" 
-      (formSubmit)="onFormSubmit($event)">
+    <demo-app-forms
+      [initialData]="studentData"
+      (formSubmit)="onFormSubmit($event)"
+    >
     </demo-app-forms>
   </div>
 </en-dialog>

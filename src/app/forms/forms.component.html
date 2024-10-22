@@ -165,7 +165,9 @@
     </div>
 
     <div class="form-actions">
-      <en-button type="submit">Submit</en-button>
+      <en-button type="submit" [isDisabled]="!additionForm.valid"
+        >Submit</en-button
+      >
       <en-button data-testid="reset" type="reset" variant="secondary"
         >Reset</en-button
       >

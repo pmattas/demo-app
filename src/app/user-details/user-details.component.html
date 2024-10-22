@@ -1,0 +1,30 @@
+<en-dialog
+  data-testid="dialog"
+  heading="User details"
+  width="80vw"
+  height="80vh"
+  style="overflow: hidden"
+>
+  <en-button slot="trigger" title="User details"
+    ><en-icon-user></en-icon-user
+  ></en-button>
+  <div class="dialog-content">
+    <p>Name:</p>
+    <en-chip variant="secondary" type="squared" [isClickable]="false">{{
+      initialData.name
+    }}</en-chip>
+    <br>
+    <p>
+      Number:
+      <en-chip variant="secondary" type="squared" [isClickable]="false">{{
+        initialData.number
+      }}</en-chip>
+    </p>
+    <p>
+      Email:
+      <en-chip variant="secondary" type="squared" [isClickable]="false">{{
+        initialData.email
+      }}</en-chip>
+    </p>
+  </div>
+</en-dialog>

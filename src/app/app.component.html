@@ -1,10 +1,15 @@
 <div class="header">
-  <en-product-logo
-    data-testid="product-logo"
-    product="ec"
-    width="50"
-    height="50"
-  ></en-product-logo>
+  <div class="product">
+    <en-product-logo
+      data-testid="product-logo"
+      product="ec"
+      width="50"
+      height="50"
+    ></en-product-logo>
+    <div *ngIf="isLoggedIn" class="user-info">
+      <app-user-details [initialData]="user" />
+    </div>
+  </div>
 </div>
 
 <demo-app-navigation *ngIf="isLoggedIn" />

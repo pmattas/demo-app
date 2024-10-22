@@ -17,6 +17,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { DialogComponent } from './dialog/dialog.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AuthGuardService } from './auth-guard.service';
+import { UserDetailsComponent } from "./user-details/user-details.component";
 ModuleRegistry.registerModules([RowGroupingModule, SideBarModule]);
 
 @NgModule({
@@ -34,7 +35,8 @@ ModuleRegistry.registerModules([RowGroupingModule, SideBarModule]);
     DialogComponent,
     NavigationComponent,
     HttpClientModule,
-  ],
+    UserDetailsComponent
+],
   providers: [AuthGuardService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -8,11 +8,12 @@ import { FormsComponent } from '../forms/forms.component';
   imports: [CommonModule, FormsComponent],
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss'],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EditComponent {
   isActive = false;
   @Input() studentData: any;
+  @Input() selectedRowData: any;
 
   ngOnChanges() {
     if (this.studentData) {
