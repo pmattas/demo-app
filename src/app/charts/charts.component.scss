@@ -8,12 +8,12 @@
   margin-top: 100px;
 }
 
+.chart-container .chart,
+.chart-container .gender-chart {
+  cursor: pointer;
+}
 .total-students {
   z-index: 1;
-}
-
-.en-chart {
-  cursor: default;
 }
 
 .chart,
@@ -52,7 +52,10 @@
     max-width: 50rem;
   }
 }
-
+.highcharts-legend {
+  z-index: 1000;
+  position: relative;
+}
 @media (max-width: 1366px) {
   .chart-container {
     margin-left: 0;

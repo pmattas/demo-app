@@ -13,6 +13,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import {
   PaginationNumberFormatterParams,
   RowSelectedEvent,
+  PaginationChangedEvent,
 } from 'ag-grid-community';
 import { CommonModule } from '@angular/common';
 import { EditComponent } from '../edit/edit.component';
@@ -27,6 +28,7 @@ import { EditComponent } from '../edit/edit.component';
 })
 export class TableComponent implements OnInit {
   private gridApi: any;
+  private gridColumnApi: any;
   pagination = true;
   paginationPageSize = 10;
   paginationSizeSelector = [10, 20, 40];
@@ -47,6 +49,42 @@ export class TableComponent implements OnInit {
     this.rowData = value;
     if (this.gridApi) {
       this.gridApi.setRowData(this.rowData);
+    }
+  }
+
+  @Input() set clickedData(value: any[]) {
+    const hyphen = new RegExp('-');
+
+    if (this.nameElement) {
+      this.renderer.setProperty(this.nameElement, 'innerHTML', '');
+    }
+
+    if (value.length > 0) {
+      const { name } = value[0];
+      if (this.nameElement) {
+        this.renderer.setProperty(
+          this.nameElement,
+          'innerHTML',
+          `Data of students:  ${name}`
+        );
+      }
+
+      if (['Male', 'Female', 'Others', 'Prefer not to say'].includes(name)) {
+        this.filteredRowData = this.rowData.filter(
+          (student) => student.gender === name
+        );
+      } else if (hyphen.test(name)) {
+        const range = this.parseRange(name);
+        this.filteredRowData = this.rowData.filter(
+          (student) => student.gpa >= range[0] && student.gpa < range[1]
+        );
+      }
+    } else {
+      this.filteredRowData = this.rowData;
+    }
+
+    if (this.gridApi) {
+      this.gridApi.setRowData(this.filteredRowData);
     }
   }
 
@@ -152,6 +190,7 @@ export class TableComponent implements OnInit {
 
   onGridReady(params: any): void {
     this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
     this.gridApi.setRowData(this.rowData);
   }
 
@@ -172,8 +211,18 @@ export class TableComponent implements OnInit {
     }
   }
 
-  onPaginationChanged(event: any): void {
+  onPaginationChanged(event: PaginationChangedEvent): void {
+    if (this.gridApi) {
+      this.gridApi.deselectAll();
+    }
     this.selectedRowData = null;
     this.selectedRowIds.clear();
+  }
+
+  parseRange(rangeString: string): [number, number] {
+    const [minString, maxString] = rangeString.split('-');
+    const min = parseFloat(minString);
+    const max = parseFloat(maxString);
+    return [min, max];
   }
 }

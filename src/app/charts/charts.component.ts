@@ -5,6 +5,7 @@ import {
   Input,
   Output,
   OnInit,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { TableComponent } from '../table/table.component';
 import { Students } from '../students.services';
@@ -70,7 +71,10 @@ export class ChartsComponent implements OnInit {
     series: [{ data: [] as ChartData[] }],
   };
 
-  constructor(private studentsService: Students) {}
+  constructor(
+    private studentsService: Students,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.studentsService.showSideBarState.subscribe((value) => {
@@ -83,7 +87,6 @@ export class ChartsComponent implements OnInit {
 
       if (Array.isArray(students) && students.length > 0) {
         this.totalStudents = students.length;
-        console.log(this.totalStudents);
         const totalStudentsElement =
           document.querySelector('.total-students h4');
         if (totalStudentsElement) {
@@ -182,7 +185,9 @@ export class ChartsComponent implements OnInit {
   }
 
   storeClickedData(point: any): void {
+    console.log('Clicked data:', point);
     this.clickedData = [{ name: point.name, y: point.y }];
     this.clickedDataEmitter.emit(this.clickedData);
+    this.cdr.detectChanges(); 
   }
 }
