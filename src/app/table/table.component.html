@@ -31,15 +31,12 @@
       (keyup)="applyFilter($event)"
     ></en-search-form>
   </div>
-  <div>
+  <div class="clicked-data-name" [hidden]="!clicked">
     <en-chip
-      *ngIf="clickedData"
-      class="clicked-data-name"
-      variant="secondary"
-      [isDismissible]="true"
-    >
-      Data of students: {{ clickedData }}
-    </en-chip>
+      class="clicked-data-name-chip"
+      [isClickable]="true"
+      (click)="onChipClick()"
+    ></en-chip>
   </div>
 
   <div class="table-container">
@@ -49,11 +46,11 @@
       [columnDefs]="columnDefs"
       [pagination]="true"
       [paginationPageSize]="paginationPageSize"
+      [paginationPageSizeSelector]="true"
       [rowData]="rowData"
       (gridReady)="onGridReady($event)"
       (rowSelected)="onRowSelected($event)"
       [rowSelection]="'multiple'"
-      (paginationChanged)="onPaginationChanged($event)"
     ></ag-grid-angular>
   </div>
 </div>

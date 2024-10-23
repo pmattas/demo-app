@@ -27,6 +27,8 @@ import { EditComponent } from '../edit/edit.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TableComponent implements OnInit {
+  clicked: boolean = false;
+  filterName: any;
   private gridApi: any;
   private gridColumnApi: any;
   pagination = true;
@@ -62,6 +64,7 @@ export class TableComponent implements OnInit {
     if (value.length > 0) {
       const { name } = value[0];
       if (this.nameElement) {
+        this.clicked = true;
         this.renderer.setProperty(
           this.nameElement,
           'innerHTML',
@@ -117,8 +120,9 @@ export class TableComponent implements OnInit {
         this.gridApi.setRowData(this.filteredRowData);
       }
     });
-    this.nameElement =
-      this.el.nativeElement.querySelector('.clicked-data-name');
+    this.nameElement = this.el.nativeElement.querySelector(
+      '.clicked-data-name-chip'
+    );
   }
 
   refreshData(): void {
@@ -224,5 +228,10 @@ export class TableComponent implements OnInit {
     const min = parseFloat(minString);
     const max = parseFloat(maxString);
     return [min, max];
+  }
+  onChipClick() {
+    console.log('clicked');
+    this.clicked = false;
+    this.resetData();
   }
 }
