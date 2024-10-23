@@ -70,6 +70,7 @@ import '@en-icons/table';
 import '@en-product-logo';
 import '@en-icons/reset';
 import { Students } from './students.services';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 @Component({
   selector: 'demo-app-root',

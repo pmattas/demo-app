@@ -1,4 +1,5 @@
 @import "ag-grid-community/styles/ag-theme-alpine.css";
+
 :host {
   display: flex;
   justify-content: center;
@@ -21,16 +22,16 @@
 }
 
 .dialog-container {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   width: 100%;
   display: flex;
   justify-content: left;
 }
 
 .table-container {
-  flex: 1; 
+  flex: 1;
   width: 100%;
-  min-height: 400px; 
+  min-height: 400px;
   height: auto;
 }
 
@@ -51,26 +52,116 @@ en-search-form {
 
 #pageSize {
   margin-left: 4rem;
-  background-color: #8981E5;
+  background-color: #8981e5;
   height: 30px;
   color: black;
   border: none;
 }
-.reset{
-  margin-left:1rem;
-}
-.delete{
+
+.reset {
   margin-left: 1rem;
 }
-demo-app-edit{
+
+.delete {
   margin-left: 1rem;
 }
+
+demo-app-edit {
+  margin-left: 1rem;
+}
+
 .sidebar-open {
-  margin-left: 320px; 
+  margin-left: 320px;
   transition: margin-left 0.7s ease;
 }
 
 .sidebar-closed {
-  margin-left: 0; 
+  margin-left: 0;
   transition: margin-left 0.7s ease;
+}
+
+@media (min-width: 2000px) {
+  .container {
+    margin-left: 320px;
+  }
+
+  .dialog-container {
+    justify-content: flex-start;
+  }
+
+  en-search-form {
+    margin-left: 50rem;
+  }
+}
+
+@media (max-width: 1366px) {
+  .container {
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  en-search-form {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  en-search-form {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 992px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dialog-container {
+    justify-content: center;
+  }
+
+  en-search-form {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  .dialog-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    margin-left: 0;
+    flex-direction: column;
+  }
+
+  en-search-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .dialog-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .refresh,
+  .reset,
+  .delete {
+    margin-left: 0;
+  }
 }

@@ -1,5 +1,12 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { TableComponent } from "../table/table.component";
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+} from '@angular/core';
+import { TableComponent } from '../table/table.component';
 import { Students } from '../students.services';
 
 interface ChartData {
@@ -9,7 +16,7 @@ interface ChartData {
 }
 
 interface GenderData {
-  [key: string]: number;  
+  [key: string]: number;
 }
 
 @Component({
@@ -18,61 +25,74 @@ interface GenderData {
   styleUrls: ['./charts.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   standalone: true,
-  imports: [TableComponent]
+  imports: [TableComponent],
 })
 export class ChartsComponent implements OnInit {
   @Input() showChart: boolean = false;
   @Output() clickedDataEmitter = new EventEmitter<any[]>();
   @Input() showSideBar: boolean = true;
+
   columnChartData: number[] = [];
-  clickedData: { name: string; y: number }[] = []; 
+  clickedData: { name: string; y: number }[] = [];
   genderChartOptions: any;
+  totalStudents: number = 0;
+
   gpaChartOptions = {
-    chart: {
-      type: 'pie'
-    },
+    chart: { type: 'pie' },
     title: {
       text: '<span style="font-size:16px;">GPA</span>',
       align: 'center',
       verticalAlign: 'middle',
-      y: 0
+      y: 0,
     },
     tooltip: {
-      pointFormat: '<span style="color:{point.color}">●</span> {series.name}: <b>{point.percentage:.1f}%</b>'
+      pointFormat:
+        '<span style="color:{point.color}">●</span> {series.name}: <b>{point.percentage:.1f}%</b>',
     },
     plotOptions: {
       pie: {
         innerSize: '60%',
         dataLabels: {
           enabled: true,
-          format: '<b>{point.name}</b><br>{point.percentage}%'
+          format: '<b>{point.name}</b><br>{point.percentage}%',
         },
         events: {
-          click: (event: any) => {
-            this.storeClickedData(event.point);
-          }
-        }
-      }
+          click: (event: any) => this.storeClickedData(event.point),
+        },
+      },
     },
-    series: [{ data: [] as ChartData[] }]
+    legend: {
+      enabled: true,
+      align: 'center',
+      verticalAlign: 'top',
+      layout: 'horizontal',
+    },
+    series: [{ data: [] as ChartData[] }],
   };
-  constructor(private studentsService: Students) {};
+
+  constructor(private studentsService: Students) {}
 
   ngOnInit(): void {
     this.studentsService.showSideBarState.subscribe((value) => {
       this.showSideBar = value;
-      console.log(this.showSideBar);
     });
+
     const storedData = localStorage.getItem('studentsData');
     if (storedData) {
       const students = JSON.parse(storedData);
-      this.updateChartData(students);
-      this.updateGenderChartData(students);
-      console.log(this.showSideBar);
+
+      if (Array.isArray(students) && students.length > 0) {
+        this.totalStudents = students.length;
+        console.log(this.totalStudents);
+        const totalStudentsElement =
+          document.querySelector('.total-students h4');
+        if (totalStudentsElement) {
+          totalStudentsElement.innerHTML = `Total Students: ${this.totalStudents}`;
+        }
+        this.updateChartData(students);
+        this.updateGenderChartData(students);
+      }
     }
-  }
-  ngOnChange(): void{
-    console.log(this.showSideBar);
   }
 
   updateChartData(students: any[]): void {
@@ -82,10 +102,10 @@ export class ChartsComponent implements OnInit {
       { name: '3.2-3.4', count: 0 },
       { name: '3.4-3.6', count: 0 },
       { name: '3.6-3.8', count: 0 },
-      { name: '3.8-4.0', count: 0 }
+      { name: '3.8-4.0', count: 0 },
     ];
 
-    students.forEach(student => {
+    students.forEach((student) => {
       const gpa = student.gpa;
       if (gpa >= 0 && gpa < 3.0) ranges[0].count++;
       else if (gpa >= 3.0 && gpa < 3.2) ranges[1].count++;
@@ -95,10 +115,10 @@ export class ChartsComponent implements OnInit {
       else if (gpa >= 3.8 && gpa <= 4.0) ranges[5].count++;
     });
 
-    this.gpaChartOptions.series[0].data = ranges.map(range => ({
+    this.gpaChartOptions.series[0].data = ranges.map((range) => ({
       name: range.name,
       y: range.count,
-      sliced: true
+      sliced: true,
     }));
   }
 
@@ -107,59 +127,62 @@ export class ChartsComponent implements OnInit {
       Male: 0,
       Female: 0,
       Others: 0,
-      'Prefer not to say': 0
+      'Prefer not to say': 0,
     };
 
-    students.forEach(student => {
-      const gender = student.gender || 'Others'; 
-      if (gender in genderCounts) {
-        genderCounts[gender]++;
-      }
+    students.forEach((student) => {
+      const gender = student.gender || 'Others';
+      if (gender in genderCounts) genderCounts[gender]++;
     });
 
     this.columnChartData = [
       genderCounts['Male'],
       genderCounts['Female'],
       genderCounts['Others'],
-      genderCounts['Prefer not to say']
+      genderCounts['Prefer not to say'],
     ];
 
     this.genderChartOptions = {
       chart: { type: 'column' },
       title: { text: 'Genders', align: 'left' },
-      xAxis: {
-        categories: ['Male', 'Female', 'Others', 'Prefer not to say'],
-      },
-      yAxis: {
-        min: 0,
-        title: { text: 'Number' },
-      },
+      xAxis: { categories: ['Male', 'Female', 'Others', 'Prefer not to say'] },
+      yAxis: { min: 0, title: { text: 'Number' } },
       plotOptions: {
         column: {
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.y}',
+          },
           events: {
-            click: (event: any) => {
-              const { name, y } = event.point;
-              if (name && y !== undefined) {
-                this.storeClickedData({ name, y });
-              }
-            }
-          }
-        }
+            click: (event: any) =>
+              this.storeClickedData({
+                name: event.point.name,
+                y: event.point.y,
+              }),
+          },
+        },
       },
-      series: [{ name: 'Genders', data: this.columnChartData.map((count, index) => ({
-          name: ['Male', 'Female', 'Others', 'Prefer not to say'][index],
-          y: count
-        }))
-      }]
-    };  
+      series: [
+        {
+          name: 'Genders',
+          data: this.columnChartData.map((count, index) => ({
+            name: ['Male', 'Female', 'Others', 'Prefer not to say'][index],
+            y: count,
+            color: ['#4CAF50', '#FFC107', '#9C27B0', '#607D8B'][index],
+          })),
+        },
+      ],
+      legend: {
+        enabled: true,
+        align: 'center',
+        verticalAlign: 'top',
+        layout: 'horizontal',
+      },
+    };
   }
 
   storeClickedData(point: any): void {
-    this.clickedData = [{
-      name: point.name,
-      y: point.y
-    }];
-    
-    this.clickedDataEmitter.emit(this.clickedData); 
+    this.clickedData = [{ name: point.name, y: point.y }];
+    this.clickedDataEmitter.emit(this.clickedData);
   }
 }

@@ -32,7 +32,8 @@ export class TableComponent implements OnInit {
   paginationSizeSelector = [10, 20, 40];
   rowData: any[] = [];
   filteredRowData: any[] = [];
-  selectedRowData: any;
+  selectedRowData: any = null;
+  selectedRowIds: Set<number> = new Set();
   @Input() showSideBar: boolean = true;
   nameElement: any;
 
@@ -50,7 +51,7 @@ export class TableComponent implements OnInit {
   }
 
   columnDefs = [
-    { headerCheckboxSelection: false, checkboxSelection: true, flex: 1 },
+    { headerCheckboxSelection: true, checkboxSelection: true, flex: 1 },
     { headerName: 'S N', valueGetter: 'node.rowIndex + 1', flex: 1 },
     { field: 'id', headerName: 'ID', flex: 1 },
     { field: 'name', headerName: 'Name', flex: 2 },
@@ -89,7 +90,6 @@ export class TableComponent implements OnInit {
 
   resetData(): void {
     this.renderer.setProperty(this.nameElement, 'innerHTML', '');
-    this.renderer.setProperty(this.nameElement, 'innerHTML', ` `);
     const storedData = JSON.parse(localStorage.getItem('studentsData') || '[]');
     this.rowData = storedData;
     this.filteredRowData = storedData;
@@ -97,32 +97,47 @@ export class TableComponent implements OnInit {
       this.gridApi.setRowData(this.filteredRowData);
     }
   }
+
   onRowSelected(event: RowSelectedEvent): void {
     const isSelected = event.node.isSelected();
+    const rowId = event.data.id;
 
     if (isSelected) {
       this.selectedRowData = { ...event.data };
-      console.log('Row selected:', this.selectedRowData);
+      this.selectedRowIds.add(rowId);
     } else {
-      if (this.selectedRowData && this.selectedRowData.id === event.data.id) {
+      this.selectedRowIds.delete(rowId);
+      if (this.selectedRowData && this.selectedRowData.id === rowId) {
         this.selectedRowData = null;
-        console.log('Row deselected:', event.data);
       }
     }
+
+    this.updateSelectedRowData();
     this.cdr.detectChanges();
   }
 
-  deleteStudent(id: any): void {
-    if (id === null || id === undefined) return;
+  updateSelectedRowData(): void {
+    if (this.selectedRowIds.size === 1) {
+      const selectedId = Array.from(this.selectedRowIds)[0];
+      this.selectedRowData = this.rowData.find((row) => row.id === selectedId);
+    } else {
+      this.selectedRowData = null;
+    }
+  }
+
+  deleteStudents(): void {
+    if (this.selectedRowIds.size === 0) return;
     const currentStudents = JSON.parse(
       localStorage.getItem('studentsData') || '[]'
     );
     const updatedStudents = currentStudents.filter(
-      (student: any) => student.id !== id
+      (student: any) => !this.selectedRowIds.has(student.id)
     );
     localStorage.setItem('studentsData', JSON.stringify(updatedStudents));
     this.rowData = updatedStudents;
     this.filteredRowData = updatedStudents;
+    this.selectedRowIds.clear();
+    this.selectedRowData = null;
     if (this.gridApi) {
       this.gridApi.setRowData(this.filteredRowData);
     }
@@ -155,5 +170,10 @@ export class TableComponent implements OnInit {
     if (this.gridApi) {
       this.gridApi.setRowData(this.filteredRowData);
     }
+  }
+
+  onPaginationChanged(event: any): void {
+    this.selectedRowData = null;
+    this.selectedRowIds.clear();
   }
 }

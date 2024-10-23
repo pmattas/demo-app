@@ -1,3 +1,4 @@
+
 <div
   class="container"
   [class.sidebar-open]="showSideBar"
@@ -13,9 +14,9 @@
     </en-button>
     <en-button
       class="delete"
-      (click)="deleteStudent(selectedRowData?.id)"
-      [isDisabled]="!selectedRowData"
-      title="Delete Student"
+      (click)="deleteStudents()"
+      [isDisabled]="selectedRowIds.size === 0"
+      title="Delete Selected Students"
     >
       <en-icon-delete></en-icon-delete>
     </en-button>
@@ -49,7 +50,8 @@
       [rowData]="rowData"
       (gridReady)="onGridReady($event)"
       (rowSelected)="onRowSelected($event)"
-      [rowSelection]="'single'"
+      [rowSelection]="'multiple'"
+      (paginationChanged)="onPaginationChanged($event)"
     ></ag-grid-angular>
   </div>
 </div>
