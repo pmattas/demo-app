@@ -40,6 +40,7 @@ export class TableComponent implements OnInit {
   selectedRowIds: Set<number> = new Set();
   @Input() showSideBar: boolean = true;
   nameElement: any;
+  totalStudents: number = 0;
 
   public paginationNumberFormatter: (
     params: PaginationNumberFormatterParams
@@ -116,6 +117,7 @@ export class TableComponent implements OnInit {
     this.studentsService.currentStudents.subscribe((data) => {
       this.rowData = data;
       this.filteredRowData = data;
+      this.totalStudents = data.length;
       if (this.gridApi) {
         this.gridApi.setRowData(this.filteredRowData);
       }
@@ -138,6 +140,7 @@ export class TableComponent implements OnInit {
     if (this.gridApi) {
       this.gridApi.setRowData(this.filteredRowData);
     }
+    this.clicked = false;
   }
 
   onRowSelected(event: RowSelectedEvent): void {
@@ -231,7 +234,6 @@ export class TableComponent implements OnInit {
   }
   onChipClick() {
     console.log('clicked');
-    this.clicked = false;
     this.resetData();
   }
 }

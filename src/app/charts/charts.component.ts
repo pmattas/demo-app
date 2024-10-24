@@ -80,18 +80,11 @@ export class ChartsComponent implements OnInit {
     this.studentsService.showSideBarState.subscribe((value) => {
       this.showSideBar = value;
     });
-
     const storedData = localStorage.getItem('studentsData');
     if (storedData) {
       const students = JSON.parse(storedData);
 
       if (Array.isArray(students) && students.length > 0) {
-        this.totalStudents = students.length;
-        const totalStudentsElement =
-          document.querySelector('.total-students h4');
-        if (totalStudentsElement) {
-          totalStudentsElement.innerHTML = `Total Students: ${this.totalStudents}`;
-        }
         this.updateChartData(students);
         this.updateGenderChartData(students);
       }
@@ -188,6 +181,6 @@ export class ChartsComponent implements OnInit {
     console.log('Clicked data:', point);
     this.clickedData = [{ name: point.name, y: point.y }];
     this.clickedDataEmitter.emit(this.clickedData);
-    this.cdr.detectChanges(); 
+    this.cdr.detectChanges();
   }
 }

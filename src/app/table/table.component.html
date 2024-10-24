@@ -3,6 +3,9 @@
   [class.sidebar-open]="showSideBar"
   [class.sidebar-closed]="!showSideBar"
 >
+  <div class="total-students">
+    <h4>Total Students: {{ totalStudents }}</h4>
+  </div>
   <div class="dialog-container">
     <demo-app-dialog></demo-app-dialog>
     <en-button class="refresh" (click)="refreshData()" title="Refresh Data">
