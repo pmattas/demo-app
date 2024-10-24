@@ -179,6 +179,7 @@ export class TableComponent implements OnInit {
       (student: any) => !this.selectedRowIds.has(student.id)
     );
     localStorage.setItem('studentsData', JSON.stringify(updatedStudents));
+    this.totalStudents--;
     this.rowData = updatedStudents;
     this.filteredRowData = updatedStudents;
     this.selectedRowIds.clear();
