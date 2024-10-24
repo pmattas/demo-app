@@ -6,6 +6,8 @@ import {
   ElementRef,
   Renderer2,
   ChangeDetectorRef,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { AgGridModule } from 'ag-grid-angular';
 import { Students } from '../students.services';
@@ -39,6 +41,7 @@ export class TableComponent implements OnInit {
   selectedRowData: any = null;
   selectedRowIds: Set<number> = new Set();
   @Input() showSideBar: boolean = true;
+ 
   nameElement: any;
   totalStudents: number = 0;
 
@@ -125,11 +128,17 @@ export class TableComponent implements OnInit {
     this.nameElement = this.el.nativeElement.querySelector(
       '.clicked-data-name-chip'
     );
+    this.loadData();
+  }
+  loadData(): void {
+    const storedData = JSON.parse(localStorage.getItem('studentsData') || '[]');
+    this.rowData = storedData;
   }
 
   refreshData(): void {
     this.renderer.setProperty(this.nameElement, 'innerHTML', '');
     this.studentsService.fetchData();
+    
   }
 
   resetData(): void {
@@ -188,6 +197,7 @@ export class TableComponent implements OnInit {
     }
     this.totalStudents = updatedStudents.length;
     this.cdr.detectChanges();
+ 
   }
 
   applyFilter(event: Event): void {

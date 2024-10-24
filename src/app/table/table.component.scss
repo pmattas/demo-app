@@ -9,7 +9,9 @@
   padding: 0;
   background-color: #1e1f2a;
 }
-
+en-dropdown-button {
+  z-index: 1;
+}
 .container {
   display: flex;
   flex-direction: column;

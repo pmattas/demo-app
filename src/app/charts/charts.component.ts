@@ -32,12 +32,12 @@ export class ChartsComponent implements OnInit {
   @Input() showChart: boolean = false;
   @Output() clickedDataEmitter = new EventEmitter<any[]>();
   @Input() showSideBar: boolean = true;
-
+  @Input() chartData: any[] = [];
   columnChartData: number[] = [];
   clickedData: { name: string; y: number }[] = [];
   genderChartOptions: any;
   totalStudents: number = 0;
-
+  dataChanged = new EventEmitter<void>();
   gpaChartOptions = {
     chart: { type: 'pie' },
     title: {
@@ -53,6 +53,7 @@ export class ChartsComponent implements OnInit {
     plotOptions: {
       pie: {
         innerSize: '60%',
+        showInLegend: true,
         dataLabels: {
           enabled: true,
           format: '<b>{point.name}</b><br>{point.percentage}%',
@@ -65,7 +66,7 @@ export class ChartsComponent implements OnInit {
     legend: {
       enabled: true,
       align: 'center',
-      verticalAlign: 'top',
+      verticalAlign: 'bottom',
       layout: 'horizontal',
     },
     series: [{ data: [] as ChartData[] }],
@@ -139,16 +140,30 @@ export class ChartsComponent implements OnInit {
     ];
 
     this.genderChartOptions = {
-      chart: { type: 'column' },
-      title: { text: 'Genders', align: 'left' },
-      xAxis: { categories: ['Male', 'Female', 'Others', 'Prefer not to say'] },
-      yAxis: { min: 0, title: { text: 'Number' } },
+      chart: {
+        type: 'column',
+        height: '400px',
+      },
+      title: { text: 'Genders', align: 'center' },
+      xAxis: {
+        categories: ['Male', 'Female', 'Others', 'Prefer not to say'],
+        labels: {
+          enabled: false,
+        },
+      },
+      yAxis: {
+        min: 0,
+        title: { text: 'Number' },
+      },
       plotOptions: {
         column: {
           dataLabels: {
             enabled: true,
             format: '<b>{point.name}</b>: {point.y}',
           },
+          showInLegend: true,
+          pointPadding: 0.2,
+          groupPadding: 0.1,
           events: {
             click: (event: any) =>
               this.storeClickedData({
@@ -160,18 +175,28 @@ export class ChartsComponent implements OnInit {
       },
       series: [
         {
-          name: 'Genders',
-          data: this.columnChartData.map((count, index) => ({
-            name: ['Male', 'Female', 'Others', 'Prefer not to say'][index],
-            y: count,
-            color: ['#4CAF50', '#FFC107', '#9C27B0', '#607D8B'][index],
-          })),
+          name: 'Male',
+          data: [{ name: 'Male', y: genderCounts['Male'] }],
+        },
+        {
+          name: 'Female',
+          data: [{ name: 'Female', y: genderCounts['Female'] }],
+        },
+        {
+          name: 'Others',
+          data: [{ name: 'Others', y: genderCounts['Others'] }],
+        },
+        {
+          name: 'Prefer not to say',
+          data: [
+            { name: 'Prefer not to say', y: genderCounts['Prefer not to say'] },
+          ],
         },
       ],
       legend: {
         enabled: true,
         align: 'center',
-        verticalAlign: 'top',
+        verticalAlign: 'bottom',
         layout: 'horizontal',
       },
     };

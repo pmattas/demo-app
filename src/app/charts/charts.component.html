@@ -14,4 +14,4 @@
   </div>
 </div>
 
-<demo-app-table [clickedData]="clickedData"></demo-app-table>
+<demo-app-table [clickedData]="clickedData" (dataChanged)="dataChanged.emit()"></demo-app-table>

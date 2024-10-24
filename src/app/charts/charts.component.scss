@@ -14,6 +14,7 @@
 }
 .total-students {
   z-index: 1;
+  margin-left: 2rem;
 }
 
 .chart,
@@ -53,8 +54,8 @@
   }
 }
 .highcharts-legend {
-  z-index: 1000;
-  position: relative;
+  z-index: 2;
+  margin-bottom: 100px;
 }
 @media (max-width: 1366px) {
   .chart-container {

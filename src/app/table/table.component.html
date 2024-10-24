@@ -41,7 +41,7 @@
       (click)="onChipClick()"
     ></en-chip>
   </div>
-
+ 
   <div class="table-container">
     <ag-grid-angular
       style="width: 100%; height: 100%"
@@ -53,6 +53,7 @@
       [rowData]="rowData"
       (gridReady)="onGridReady($event)"
       (rowSelected)="onRowSelected($event)"
+      (paginationChanged)="onPaginationChanged($event)"
       [rowSelection]="'multiple'"
     ></ag-grid-angular>
   </div>
