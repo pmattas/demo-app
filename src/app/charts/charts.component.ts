@@ -81,14 +81,17 @@ export class ChartsComponent implements OnInit {
     this.studentsService.showSideBarState.subscribe((value) => {
       this.showSideBar = value;
     });
+
     const storedData = localStorage.getItem('studentsData');
     if (storedData) {
       const students = JSON.parse(storedData);
-
-      if (Array.isArray(students) && students.length > 0) {
-        this.updateChartData(students);
-        this.updateGenderChartData(students);
-      }
+      this.studentsService.currentStudents.subscribe((students) => {
+        if (students.length) {
+          this.updateChartData(students);
+          this.updateGenderChartData(students);
+          this.cdr.detectChanges();
+        }
+      });
     }
   }
 
@@ -101,7 +104,6 @@ export class ChartsComponent implements OnInit {
       { name: '3.6-3.8', count: 0 },
       { name: '3.8-4.0', count: 0 },
     ];
-
     students.forEach((student) => {
       const gpa = student.gpa;
       if (gpa >= 0 && gpa < 3.0) ranges[0].count++;

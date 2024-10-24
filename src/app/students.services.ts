@@ -46,25 +46,22 @@ export class Students {
       return Math.max(maxId, s.id || 0);
     }, 0);
     const newStudent = { ...student, id: largestId + 1 };
-    this.studentsData.next([newStudent, ...currentStudents]);
-    localStorage.setItem(
-      'studentsData',
-      JSON.stringify(this.studentsData.value)
-    );
+    const updatedStudents = [newStudent, ...currentStudents];
+    this.studentsData.next(updatedStudents);
+    localStorage.setItem('studentsData', JSON.stringify(updatedStudents));
 
-    this.totalStudents = this.studentsData.value.length;
+    this.totalStudents = updatedStudents.length;
   }
 
   updateStudent(updatedStudent: any): void {
-    const currentStudents = JSON.parse(
-      localStorage.getItem('studentsData') || '[]'
-    );
+    const currentStudents = this.studentsData.value;
     const studentIndex = currentStudents.findIndex(
       (student: any) => student.id === updatedStudent.id
     );
     if (studentIndex > -1) {
       currentStudents[studentIndex] = updatedStudent;
     }
+    this.studentsData.next([...currentStudents]);
     localStorage.setItem('studentsData', JSON.stringify(currentStudents));
   }
 
