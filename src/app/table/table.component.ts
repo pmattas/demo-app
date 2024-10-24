@@ -179,7 +179,6 @@ export class TableComponent implements OnInit {
       (student: any) => !this.selectedRowIds.has(student.id)
     );
     localStorage.setItem('studentsData', JSON.stringify(updatedStudents));
-    this.totalStudents--;
     this.rowData = updatedStudents;
     this.filteredRowData = updatedStudents;
     this.selectedRowIds.clear();
@@ -187,6 +186,7 @@ export class TableComponent implements OnInit {
     if (this.gridApi) {
       this.gridApi.setRowData(this.filteredRowData);
     }
+    this.totalStudents = updatedStudents.length;
     this.cdr.detectChanges();
   }
 
