@@ -41,7 +41,7 @@
       (click)="onChipClick()"
     ></en-chip>
   </div>
- 
+
   <div class="table-container">
     <ag-grid-angular
       style="width: 100%; height: 100%"
@@ -56,5 +56,12 @@
       (paginationChanged)="onPaginationChanged($event)"
       [rowSelection]="'multiple'"
     ></ag-grid-angular>
+  </div>
+  <div class="pagination-controls">
+    <select (change)="onPageSizeChange($event)">
+      <option *ngFor="let size of paginationSizeSelector" [value]="size">
+        {{ size }}
+      </option>
+    </select>
   </div>
 </div>

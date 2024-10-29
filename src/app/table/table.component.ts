@@ -219,6 +219,7 @@ export class TableComponent implements OnInit {
       this.gridApi.paginationSetPageSize(this.paginationPageSize);
     }
   }
+  
 
   reloadTableData(): void {
     const storedData = JSON.parse(localStorage.getItem('studentsData') || '[]');
