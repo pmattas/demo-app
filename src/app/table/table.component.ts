@@ -41,7 +41,7 @@ export class TableComponent implements OnInit {
   selectedRowData: any = null;
   selectedRowIds: Set<number> = new Set();
   @Input() showSideBar: boolean = true;
- 
+
   nameElement: any;
   totalStudents: number = 0;
 
@@ -138,7 +138,6 @@ export class TableComponent implements OnInit {
   refreshData(): void {
     this.renderer.setProperty(this.nameElement, 'innerHTML', '');
     this.studentsService.fetchData();
-    
   }
 
   resetData(): void {
@@ -181,23 +180,11 @@ export class TableComponent implements OnInit {
 
   deleteStudents(): void {
     if (this.selectedRowIds.size === 0) return;
-    const currentStudents = JSON.parse(
-      localStorage.getItem('studentsData') || '[]'
-    );
-    const updatedStudents = currentStudents.filter(
-      (student: any) => !this.selectedRowIds.has(student.id)
-    );
-    localStorage.setItem('studentsData', JSON.stringify(updatedStudents));
-    this.rowData = updatedStudents;
-    this.filteredRowData = updatedStudents;
+    this.studentsService.deleteStudents(this.selectedRowIds);
     this.selectedRowIds.clear();
     this.selectedRowData = null;
-    if (this.gridApi) {
-      this.gridApi.setRowData(this.filteredRowData);
-    }
-    this.totalStudents = updatedStudents.length;
+    this.totalStudents = this.studentsService.totalStudents;
     this.cdr.detectChanges();
- 
   }
 
   applyFilter(event: Event): void {
